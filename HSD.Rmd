@@ -1,0 +1,38 @@
+---
+title: "Hate Speech Analysis"
+author: "Hadi Mansourifar"
+date: "4/27/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ANOVA Test on Perspective Scores of Hate Speech Data
+
+
+```{r}
+tweet1= read.csv("clubhouse-scores3.csv")
+ano1 <- aov(label ~ TOXICITY +SEVERE_TOXICITY+ IDENTITY_ATTACK+INSULT+PROFANITY+THREAT+SEXUALLY_EXPLICIT+OBSCENE+SPAM,data=tweet1, family=binomial(link='logit'))
+ou=summary(ano1)
+ou
+library(xtable)
+#print(xtable(ou), type="latex", file="output.tex")
+
+ano1 <- aov(label ~ TOXICITY +SEVERE_TOXICITY+ IDENTITY_ATTACK+INSULT+PROFANITY+THREAT+SEXUALLY_EXPLICIT+OBSCENE+SPAM+ TOXICITY:IDENTITY_ATTACK+TOXICITY:SPAM +TOXICITY:THREAT+TOXICITY:INSULT , data=tweet1, family=binomial(link='logit'))
+ou3=summary(ano1)
+ou3
+print(xtable(ou3), type="latex", file="output300.tex")
+##################################
+tweet2= read.csv("clubhouse-scores3.csv")
+ano2=aov(label ~ TOXICITY +SEVERE_TOXICITY+ IDENTITY_ATTACK+INSULT+PROFANITY+THREAT+SEXUALLY_EXPLICIT+OBSCENE+SPAM,data=tweet2)
+ou2=summary(ano2)
+library(latex2exp)
+print(xtable(ou), type="latex", file="output200.tex")
+ou2
+
+```
+
